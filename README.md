@@ -1,3 +1,3 @@
-# movie_match
+# Movie Match
 
-A new Flutter project.
+Match movies with friends for movie nights!

@@ -1,5 +1,5 @@
 name: movie_match
-description: "Match movies with friends for movie nights."
+description: "A simple movie matching app"
 publish_to: "none"
 version: 0.1.0
 
