@@ -3,30 +3,30 @@ import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DeviceIdService {
-  static const String _deviceIdKey = 'device_id';
-  static final DeviceInfoPlugin _deviceInfo = DeviceInfoPlugin();
-  static const AndroidId _androidIdPlugin = AndroidId();
+class DeviceIDservice {
+  static const String deviceIDkey = 'device_id';
+  static final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  static const AndroidId androidIDplugin = AndroidId();
 
-  static Future<String> getDeviceId() async {
+  static Future<String> getDeviceID() async {
     final prefs = await SharedPreferences.getInstance();
-    String? deviceId = prefs.getString(_deviceIdKey);
+    String? deviceID = prefs.getString(deviceIDkey);
 
-    if (deviceId != null) {
-      return deviceId;
+    if (deviceID != null) {
+      return deviceID;
     }
 
     if (Platform.isAndroid) {
-      deviceId = await _androidIdPlugin.getId() ?? '';
+      deviceID = await androidIDplugin.getId() ?? '';
     } else if (Platform.isIOS) {
-      final iosInfo = await _deviceInfo.iosInfo;
-      deviceId = iosInfo.identifierForVendor ?? '';
+      final iOSinfo = await deviceInfo.iosInfo;
+      deviceID = iOSinfo.identifierForVendor ?? '';
     }
 
-    if (deviceId != null && deviceId.isNotEmpty) {
-      await prefs.setString(_deviceIdKey, deviceId);
+    if (deviceID != null && deviceID.isNotEmpty) {
+      await prefs.setString(deviceIDkey, deviceID);
     }
 
-    return deviceId ?? '';
+    return deviceID ?? '';
   }
 }
