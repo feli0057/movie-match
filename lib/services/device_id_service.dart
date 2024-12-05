@@ -3,7 +3,7 @@ import 'package:android_id/android_id.dart';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DeviceIDservice {
+class DeviceIdService {
   static const String deviceIDkey = 'device_id';
   static final DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
   static const AndroidId androidIDplugin = AndroidId();

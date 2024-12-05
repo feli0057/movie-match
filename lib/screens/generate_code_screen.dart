@@ -6,36 +6,36 @@ class GenerateCodeScreen extends StatefulWidget {
   const GenerateCodeScreen({super.key});
 
   @override
-  State<GenerateCodeScreen> createState() => GenerateCodeScreenState();
+  State<GenerateCodeScreen> createState() => _GenerateCodeScreenState();
 }
 
-class GenerateCodeScreenState extends State<GenerateCodeScreen> {
-  bool isLoading = true;
-  String? code;
-  String? error;
+class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
+  bool _isLoading = true;
+  String? _code;
+  String? _error;
 
   @override
   void initState() {
     super.initState();
-    generateCode();
+    _generateCode();
   }
 
-  Future<void> generateCode() async {
+  Future<void> _generateCode() async {
     try {
-      final deviceID = await DeviceIDservice.getDeviceID();
+      final deviceID = await DeviceIdService.getDeviceID();
       final response = await HttpHelper.startSession(deviceID);
 
       if (mounted) {
         setState(() {
-          code = response['data']['code'].toString();
-          isLoading = false;
+          _code = response['data']['code'].toString();
+          _isLoading = false;
         });
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-          error = 'Failed to generate code. Please try again.';
-          isLoading = false;
+          _error = 'Failed to generate code. Please try again.';
+          _isLoading = false;
         });
       }
     }
@@ -59,7 +59,7 @@ class GenerateCodeScreenState extends State<GenerateCodeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (isLoading) ...[
+            if (_isLoading) ...[
               const Center(
                 child: CircularProgressIndicator(
                   color: Colors.deepPurple,
@@ -67,9 +67,9 @@ class GenerateCodeScreenState extends State<GenerateCodeScreen> {
               ),
               const SizedBox(height: 16),
               const Text('Generating your code...'),
-            ] else if (error != null) ...[
+            ] else if (_error != null) ...[
               Text(
-                error!,
+                _error!,
                 style: const TextStyle(color: Colors.red),
                 textAlign: TextAlign.center,
               ),
@@ -80,10 +80,10 @@ class GenerateCodeScreenState extends State<GenerateCodeScreen> {
                 child: ElevatedButton(
                   onPressed: () {
                     setState(() {
-                      isLoading = true;
-                      error = null;
+                      _isLoading = true;
+                      _error = null;
                     });
-                    generateCode();
+                    _generateCode();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
@@ -111,7 +111,7 @@ class GenerateCodeScreenState extends State<GenerateCodeScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
-                  code!,
+                  _code!,
                   style: const TextStyle(
                     fontSize: 48,
                     fontWeight: FontWeight.bold,
@@ -131,7 +131,7 @@ class GenerateCodeScreenState extends State<GenerateCodeScreen> {
                     backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
                   ),
-                  child: const Text('Start Matching'),
+                  child: const Text('Start Movie Match'),
                 ),
               ),
             ],
