@@ -54,7 +54,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               ),
               const Spacer(),
               const Text(
-                'Choose an option to start matching movies',
+                'Choose one to start matching!',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
