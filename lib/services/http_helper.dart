@@ -9,7 +9,7 @@ class HttpHelper {
   static const String theMovieDBbaseURL = 'https://api.themoviedb.org/3';
   static const String sessionIDkey = 'session_id';
 
-  // Get TMDB API Key from environment variables
+  // Use TMDB API Key from environment variables
   static String get tmdbAPIkey => dotenv.env['TMDB_API_KEY'] ?? '';
 
   // MovieNight API Methods
@@ -51,21 +51,7 @@ class HttpHelper {
     }
   }
 
-  static Future<Map<String, dynamic>> voteMovie(
-      String sessionID, int movieID, bool vote) async {
-    final response = await http.get(
-      Uri.parse(
-          '$movieNightAPIbaseURL/vote-movie?session_id=$sessionID&movie_id=$movieID&vote=$vote'),
-    );
-
-    if (response.statusCode == 200) {
-      return json.decode(response.body);
-    } else {
-      throw Exception('Failed to vote on movie');
-    }
-  }
-
-  // TMDB API Methods
+  // The MovieDB API Methods
   static Future<Map<String, dynamic>> getPopularMovies({int page = 1}) async {
     final response = await http.get(
       Uri.parse(
