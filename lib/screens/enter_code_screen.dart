@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../services/device_id_service.dart';
 import '../services/http_helper.dart';
+import 'movie_matching_screen.dart';
 
 class EnterCodeScreen extends StatefulWidget {
   const EnterCodeScreen({super.key});
@@ -35,13 +36,12 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
       await HttpHelper.joinSession(deviceID, code);
 
       if (mounted) {
-        // TODO: Navigate to Movie Selection Screen
-        // Navigator.pushReplacement(
-        //   context,
-        //   MaterialPageRoute(
-        //     builder: (context) => const MovieSelectionScreen(),
-        //   ),
-        // );
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MovieMatchingScreen(),
+          ),
+        );
       }
     } catch (e) {
       if (mounted) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/device_id_service.dart';
 import '../services/http_helper.dart';
+import 'movie_matching_screen.dart';
 
 class GenerateCodeScreen extends StatefulWidget {
   const GenerateCodeScreen({super.key});
@@ -125,7 +126,12 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                 height: 56,
                 child: ElevatedButton(
                   onPressed: () {
-                    // TODO: Navigate to movie selection screen
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MovieMatchingScreen(),
+                      ),
+                    );
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
