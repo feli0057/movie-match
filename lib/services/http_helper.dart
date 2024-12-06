@@ -9,7 +9,7 @@ class HttpHelper {
   static const String theMovieDBbaseURL = 'https://api.themoviedb.org/3';
   static const String sessionIDkey = 'session_id';
 
-  // Use TMDB API Key from environment variables
+  // Use The MovieDB API Key from environment variables
   static String get tmdbAPIkey => dotenv.env['TMDB_API_KEY'] ?? '';
 
   // MovieNight API Methods
@@ -22,8 +22,8 @@ class HttpHelper {
       final data = json.decode(response.body);
       // Store session ID
       if (data['data']['session_id'] != null) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(sessionIDkey, data['data']['session_id']);
+        final preferences = await SharedPreferences.getInstance();
+        await preferences.setString(sessionIDkey, data['data']['session_id']);
       }
       return data;
     } else {
@@ -42,8 +42,8 @@ class HttpHelper {
       final data = json.decode(response.body);
       // Store session ID
       if (data['data']['session_id'] != null) {
-        final prefs = await SharedPreferences.getInstance();
-        await prefs.setString(sessionIDkey, data['data']['session_id']);
+        final preferences = await SharedPreferences.getInstance();
+        await preferences.setString(sessionIDkey, data['data']['session_id']);
       }
       return data;
     } else {
@@ -53,9 +53,14 @@ class HttpHelper {
 
   // The MovieDB API Methods
   static Future<Map<String, dynamic>> getPopularMovies({int page = 1}) async {
+    final headers = {
+      'Authorization': 'Bearer $tmdbAPIkey',
+      'accept': 'application/json',
+    };
+
     final response = await http.get(
-      Uri.parse(
-          '$theMovieDBbaseURL/movie/popular?api_key=$tmdbAPIkey&page=$page'),
+      Uri.parse('$theMovieDBbaseURL/movie/popular?page=$page'),
+      headers: headers,
     );
 
     if (response.statusCode == 200) {
@@ -67,12 +72,12 @@ class HttpHelper {
 
   // Session ID Management
   static Future<String?> getSessionId() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString(sessionIDkey);
+    final preferences = await SharedPreferences.getInstance();
+    return preferences.getString(sessionIDkey);
   }
 
   static Future<void> clearSessionId() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.remove(sessionIDkey);
+    final preferences = await SharedPreferences.getInstance();
+    await preferences.remove(sessionIDkey);
   }
 }

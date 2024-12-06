@@ -9,8 +9,8 @@ class DeviceIdService {
   static const AndroidId androidIDplugin = AndroidId();
 
   static Future<String> getDeviceID() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? deviceID = prefs.getString(deviceIDkey);
+    final preferences = await SharedPreferences.getInstance();
+    String? deviceID = preferences.getString(deviceIDkey);
 
     if (deviceID != null) {
       return deviceID;
@@ -24,7 +24,7 @@ class DeviceIdService {
     }
 
     if (deviceID != null && deviceID.isNotEmpty) {
-      await prefs.setString(deviceIDkey, deviceID);
+      await preferences.setString(deviceIDkey, deviceID);
     }
 
     return deviceID ?? '';
