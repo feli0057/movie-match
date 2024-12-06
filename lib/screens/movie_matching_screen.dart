@@ -11,15 +11,17 @@ class MovieMatchingScreen extends StatefulWidget {
 
 class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
   bool _isLoading = true;
+  bool _isLoadingMore = false;
   List<dynamic> _movies = [];
   int _currentIndex = 0;
+  int _currentPage = 1;
   Map<String, dynamic>? _currentMovie;
 
   @override
   void initState() {
     super.initState();
     _validateIDs();
-    _loadMovie();
+    _loadMovies();
   }
 
   //Validate the device ID and session ID
@@ -36,21 +38,42 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
   }
 
   //Fetch popular movies from The MovieDB API
-  Future<void> _loadMovie() async {
+  Future<void> _loadMovies({bool loadMore = false}) async {
     try {
-      final response = await HttpHelper.getPopularMovies();
-      _movies = response['results'];
+      if (!loadMore) {
+        final response = await HttpHelper.getPopularMovies(page: _currentPage);
+        _movies = response['results'];
+      } else {
+        setState(() {
+          _isLoadingMore = true;
+        });
+
+        final response =
+            await HttpHelper.getPopularMovies(page: _currentPage + 1);
+        final newMovies = response['results'] as List<dynamic>;
+
+        if (mounted) {
+          setState(() {
+            _movies.addAll(newMovies);
+            _currentPage++;
+            _isLoadingMore = false;
+          });
+        }
+      }
 
       if (!mounted) return;
 
-      setState(() {
-        _currentMovie = _movies[_currentIndex];
-        _isLoading = false;
-      });
+      if (!loadMore) {
+        setState(() {
+          _currentMovie = _movies[_currentIndex];
+          _isLoading = false;
+        });
+      }
     } catch (e) {
       if (!mounted) return;
       setState(() {
         _isLoading = false;
+        _isLoadingMore = false;
       });
     }
   }
@@ -62,6 +85,11 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
         _currentIndex++;
         _currentMovie = _movies[_currentIndex];
       });
+
+      // Load more movies when we're 3 movies away from the end
+      if (_currentIndex >= _movies.length - 3 && !_isLoadingMore) {
+        _loadMovies(loadMore: true);
+      }
     }
   }
 
