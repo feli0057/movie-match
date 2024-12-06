@@ -70,6 +70,25 @@ class HttpHelper {
     }
   }
 
+  /// Vote on a movie. Returns a map containing movie_id and match status
+  static Future<Map<String, dynamic>> voteMovie({
+    required String sessionID,
+    required int movieID,
+    required bool vote,
+  }) async {
+    final response = await http.get(
+      Uri.parse(
+        '$movieNightAPIbaseURL/vote-movie?session_id=$sessionID&movie_id=$movieID&vote=$vote',
+      ),
+    );
+
+    if (response.statusCode == 200) {
+      return json.decode(response.body)['data'];
+    } else {
+      throw Exception('Failed to vote on movie');
+    }
+  }
+
   // Session ID Management
   static Future<String?> getSessionID() async {
     final preferences = await SharedPreferences.getInstance();

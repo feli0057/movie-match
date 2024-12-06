@@ -79,17 +79,105 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
   }
 
   void _handleSwipe(DismissDirection direction) {
-    // Move to next random movie in the array if available
+    final bool liked = direction == DismissDirection.startToEnd;
+    _voteOnMovie(liked);
+
+    // Move to next random movie in the array
     if (_currentIndex < _movies.length - 1) {
       setState(() {
         _currentIndex++;
         _currentMovie = _movies[_currentIndex];
       });
 
-      // Load more movies when we're 3 movies away from the end
+      // Load more movies when there's 3 movies left in the array
       if (_currentIndex >= _movies.length - 3 && !_isLoadingMore) {
         _loadMovies(loadMore: true);
       }
+    }
+  }
+
+  Future<void> _voteOnMovie(bool liked) async {
+    try {
+      final sessionID = await HttpHelper.getSessionID();
+      if (sessionID == null || sessionID.isEmpty) return;
+
+      final movieID = _currentMovie!['id'] as int;
+      final result = await HttpHelper.voteMovie(
+        sessionID: sessionID,
+        movieID: movieID,
+        vote: liked,
+      );
+
+      // Only show dialog if there's a match and we're still mounted
+      if (result['match'] == true && mounted) {
+        final movieTitle = _currentMovie!['title'] as String;
+        showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text(
+                'It\'s a Movie Match! 🍿',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+                textAlign: TextAlign.center,
+              ),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Text(
+                    'You both liked',
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 4),
+                  Text(
+                    movieTitle,
+                    style: const TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.deepPurple,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ElevatedButton(
+                            onPressed: () =>
+                                Navigator.of(context).pushReplacementNamed('/'),
+                            child: const Text('End'),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4.0),
+                          child: ElevatedButton(
+                            onPressed: () => Navigator.of(context).pop(),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.deepPurple,
+                              foregroundColor: Colors.white,
+                            ),
+                            child: const Text('Continue'),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            );
+          },
+        );
+      }
+    } catch (e) {
+      // Silently handle error to not disrupt user experience
+      debugPrint('Error voting on movie: $e');
     }
   }
 
