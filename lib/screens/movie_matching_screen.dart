@@ -21,19 +21,20 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
     _loadMovie();
   }
 
-  // Validate the device ID and session ID
+  //Validate the device ID and session ID
   Future<void> _validateIDs() async {
     final deviceID = await DeviceIdService.getDeviceID();
-    final sessionID = await HttpHelper.getSessionId();
+    final sessionID = await HttpHelper.getSessionID();
 
     if (!mounted) return;
 
+    //Return to the welcome screen if either device ID or session ID is unavailable
     if (deviceID.isEmpty || sessionID == null || sessionID.isEmpty) {
       Navigator.of(context).pushReplacementNamed('/');
     }
   }
 
-  // Fetch popular movies from The MovieDB API
+  //Fetch popular movies from The MovieDB API
   Future<void> _loadMovie() async {
     try {
       final response = await HttpHelper.getPopularMovies();
@@ -41,7 +42,7 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
 
       if (!mounted) return;
 
-      // Get a random movie from the results
+      //Pick a random movie from the results
       final random = Random();
       final randomIndex = random.nextInt(movies.length);
 
@@ -91,11 +92,11 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                 child: posterURL != null
                     ? Image.network(
                         posterURL,
-                        fit: BoxFit.fitHeight,
+                        fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Image.asset(
                             posterPlaceholder,
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.cover,
                           );
                         },
                       )
@@ -122,12 +123,12 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                   ),
                   const SizedBox(height: 8),
                   Text(
-                    'Release Date: ${_currentMovie!['release_date'] ?? 'Unknown'}',
+                    'Released: ${_currentMovie!['release_date'] ?? 'Unknown'}',
                     style: const TextStyle(fontSize: 16),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    'Rating: ${(_currentMovie!['vote_average'] ?? 0.0).toStringAsFixed(1)}/10',
+                    'Rating: ${(_currentMovie!['vote_average'] ?? 0.0).toStringAsFixed(1)}/10 (${_currentMovie!['vote_count'] ?? 0} votes)',
                     style: const TextStyle(fontSize: 16),
                   ),
                 ],

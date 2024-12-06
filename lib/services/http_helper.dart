@@ -71,12 +71,12 @@ class HttpHelper {
   }
 
   // Session ID Management
-  static Future<String?> getSessionId() async {
+  static Future<String?> getSessionID() async {
     final preferences = await SharedPreferences.getInstance();
     return preferences.getString(sessionIDkey);
   }
 
-  static Future<void> clearSessionId() async {
+  static Future<void> clearSessionID() async {
     final preferences = await SharedPreferences.getInstance();
     await preferences.remove(sessionIDkey);
   }
