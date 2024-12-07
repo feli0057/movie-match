@@ -98,8 +98,8 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -122,10 +122,9 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 maxLength: 4,
                 textAlign: TextAlign.center,
                 style: const TextStyle(
-                  fontSize: 48,
-                  letterSpacing: 8,
-                  fontWeight: FontWeight.bold
-                ),
+                    fontSize: 64,
+                    letterSpacing: 8,
+                    fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
                   hintText: '0000',
                   hintStyle: const TextStyle(
@@ -163,8 +162,8 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _submitCode,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purpleAccent,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     disabledBackgroundColor: Colors.grey,
                     textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,

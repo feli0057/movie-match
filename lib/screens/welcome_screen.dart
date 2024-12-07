@@ -29,9 +29,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             style: Theme.of(context)
                 .textTheme
                 .displayLarge
-                ?.copyWith(color: Colors.white)),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+                ?.copyWith(color: Theme.of(context).colorScheme.onPrimary)),
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: SafeArea(
         child: Padding(
@@ -54,8 +54,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
@@ -68,7 +68,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 'Choose one to start matching!',
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Colors.grey,
+                      color: Theme.of(context).colorScheme.outline,
                     ),
               ),
               const Spacer(),
@@ -86,8 +86,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.purpleAccent,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    foregroundColor: Theme.of(context).colorScheme.onSecondary,
                     textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

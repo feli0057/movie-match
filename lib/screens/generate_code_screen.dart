@@ -52,8 +52,8 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: Padding(
         padding: const EdgeInsets.all(24.0),
@@ -61,13 +61,20 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             if (_isLoading) ...[
-              const Center(
+              Center(
                 child: CircularProgressIndicator(
-                  color: Colors.deepPurple,
+                  valueColor: AlwaysStoppedAnimation<Color>(
+                    Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
               const SizedBox(height: 16),
-              const Text('Generating your code...'),
+              Text(
+                'Generating your code...',
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
+              ),
             ] else if (_error != null) ...[
               Text(
                 _error!,
@@ -87,18 +94,23 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                     _generateCode();
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                   ),
-                  child: const Text('Try Again'),
+                  child: Text(
+                    'Try Again',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
                 ),
               ),
             ] else ...[
-              const Text(
+              Text(
                 'Share this code with your friend',
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                      color: Theme.of(context).colorScheme.onSurface,
+                    ),
                 textAlign: TextAlign.center,
               ),
               const SizedBox(height: 24),
@@ -108,16 +120,17 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                   vertical: 24,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.deepPurple.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.surface,
                   borderRadius: BorderRadius.circular(12),
                 ),
                 child: Text(
                   _code!,
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
-                  ),
+                  style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                        fontSize: 64,
+                        letterSpacing: 8,
+                        color: Theme.of(context).colorScheme.primary,
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
               const SizedBox(height: 48),
@@ -134,13 +147,18 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
-                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
                     textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),
                   ),
-                  child: const Text('Start Movie Match'),
+                  child: Text(
+                    'Start Movie Match',
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                  ),
                 ),
               ),
             ],

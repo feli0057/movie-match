@@ -125,13 +125,12 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
           barrierDismissible: false,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text(
+              title: Text(
                 'It\'s a match! 🍿',
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.w700,
-                  letterSpacing: -0.5,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                      fontWeight: FontWeight.bold,
+                    ),
                 textAlign: TextAlign.center,
               ),
               content: Column(
@@ -139,14 +138,16 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                 children: [
                   Text(
                     'You both liked',
-                    style: Theme.of(context).textTheme.bodyLarge,
+                    style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          color: Theme.of(context).colorScheme.onSurface,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     movieTitle,
                     style: Theme.of(context).textTheme.headlineLarge?.copyWith(
-                          color: Colors.deepPurple,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
                     textAlign: TextAlign.center,
                   ),
@@ -160,6 +161,12 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                           child: ElevatedButton(
                             onPressed: () =>
                                 Navigator.of(context).pushReplacementNamed('/'),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onPrimary,
+                            ),
                             child: const Text('End'),
                           ),
                         ),
@@ -170,8 +177,10 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                           child: ElevatedButton(
                             onPressed: () => Navigator.of(context).pop(),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.deepPurple,
-                              foregroundColor: Colors.white,
+                              backgroundColor:
+                                  Theme.of(context).colorScheme.primary,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.onPrimary,
                             ),
                             child: const Text('Continue'),
                           ),
@@ -240,6 +249,7 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
         ),
       ),
       child: Card(
+        color: Theme.of(context).colorScheme.surface,
         elevation: 8,
         margin: const EdgeInsets.symmetric(horizontal: 24),
         shape: RoundedRectangleBorder(
@@ -280,10 +290,10 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                   children: [
                     Text(
                       _currentMovie!['title'] ?? 'Unknown Title',
-                      style: const TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.bold,
-                      ),
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            color: Theme.of(context).colorScheme.onSurface,
+                            fontWeight: FontWeight.bold,
+                          ),
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       textAlign: TextAlign.center,
@@ -291,12 +301,16 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                     const SizedBox(height: 8),
                     Text(
                       'Released: ${_currentMovie!['release_date'] ?? 'Unknown'}',
-                      style: const TextStyle(fontSize: 16),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
                     ),
                     const SizedBox(height: 4),
                     Text(
                       'Rating: ${(_currentMovie!['vote_average'] ?? 0.0).toStringAsFixed(1)}/10 (${_currentMovie!['vote_count'] ?? 0} votes)',
-                      style: const TextStyle(fontSize: 16),
+                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                            color: Theme.of(context).colorScheme.outline,
+                          ),
                     ),
                   ],
                 ),
@@ -318,8 +332,8 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: Colors.deepPurple,
-        foregroundColor: Colors.white,
+        backgroundColor: Theme.of(context).colorScheme.primary,
+        foregroundColor: Theme.of(context).colorScheme.onPrimary,
       ),
       body: Center(
         child: _isLoading
