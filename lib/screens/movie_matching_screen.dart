@@ -127,10 +127,9 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
             return AlertDialog(
               title: Text(
                 'It\'s a match! 🍿',
-                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                      color: Theme.of(context).colorScheme.primary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                style: Theme.of(context).textTheme.displayMedium?.copyWith(
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w700),
                 textAlign: TextAlign.center,
               ),
               content: Column(
@@ -162,10 +161,11 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
                             onPressed: () =>
                                 Navigator.of(context).pushReplacementNamed('/'),
                             style: ElevatedButton.styleFrom(
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.primary,
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .surfaceContainerHighest,
                               foregroundColor:
-                                  Theme.of(context).colorScheme.onPrimary,
+                                  Theme.of(context).colorScheme.primary,
                             ),
                             child: const Text('End'),
                           ),
