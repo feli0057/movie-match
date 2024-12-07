@@ -73,7 +73,7 @@ class HttpHelper {
     }
   }
 
-  /// Vote on a movie. Returns a map containing movie_id and match status
+  /// Vote on a movie.
   static Future<Map<String, dynamic>> voteMovie({
     required String sessionID,
     required int movieID,
