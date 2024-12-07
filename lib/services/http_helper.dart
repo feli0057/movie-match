@@ -27,7 +27,8 @@ class HttpHelper {
       }
       return data;
     } else {
-      throw Exception('Failed to start session');
+      throw Exception(
+          'Failed to start session: ${response.statusCode} - ${response.body}');
     }
   }
 
@@ -47,7 +48,8 @@ class HttpHelper {
       }
       return data;
     } else {
-      throw Exception('Failed to join session');
+      throw Exception(
+          'Failed to join session: ${response.statusCode} - ${response.body}');
     }
   }
 
@@ -66,7 +68,8 @@ class HttpHelper {
     if (response.statusCode == 200) {
       return json.decode(response.body);
     } else {
-      throw Exception('Failed to load popular movies');
+      throw Exception(
+          'Failed to load popular movies: ${response.statusCode} - ${response.body}');
     }
   }
 
@@ -85,7 +88,8 @@ class HttpHelper {
     if (response.statusCode == 200) {
       return json.decode(response.body)['data'];
     } else {
-      throw Exception('Failed to vote on movie: ${response.statusCode} - ${response.body}');
+      throw Exception(
+          'Failed to vote on movie: ${response.statusCode} - ${response.body}');
     }
   }
 
