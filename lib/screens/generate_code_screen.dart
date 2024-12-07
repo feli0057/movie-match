@@ -136,6 +136,9 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   child: const Text('Start Movie Match'),
                 ),

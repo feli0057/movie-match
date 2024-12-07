@@ -124,6 +124,7 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 style: const TextStyle(
                   fontSize: 48,
                   letterSpacing: 8,
+                  fontWeight: FontWeight.bold
                 ),
                 decoration: InputDecoration(
                   hintText: '0000',
@@ -165,6 +166,9 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                     backgroundColor: Colors.purpleAccent,
                     foregroundColor: Colors.white,
                     disabledBackgroundColor: Colors.grey,
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   child: _isLoading
                       ? const SizedBox(

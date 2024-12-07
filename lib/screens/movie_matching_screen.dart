@@ -126,27 +126,28 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
           builder: (BuildContext context) {
             return AlertDialog(
               title: const Text(
-                'It\'s a Movie Match! 🍿',
+                'It\'s a match! 🍿',
                 style: TextStyle(
-                  fontWeight: FontWeight.bold,
+                  fontSize: 24,
+                  fontWeight: FontWeight.w700,
+                  letterSpacing: -0.5,
                 ),
                 textAlign: TextAlign.center,
               ),
               content: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Text(
+                  Text(
                     'You both liked',
+                    style: Theme.of(context).textTheme.bodyLarge,
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     movieTitle,
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
+                    style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                          color: Colors.deepPurple,
+                        ),
                     textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 20),
@@ -193,7 +194,13 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
   Widget _buildMovieCard() {
     if (_currentMovie == null) {
       return const Center(
-        child: Text('Failed to load movie'),
+        child: Text(
+          'Failed to load movie',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
       );
     }
 

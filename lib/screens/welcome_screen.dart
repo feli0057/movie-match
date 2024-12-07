@@ -25,12 +25,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Movie Match',
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text('Movie Match',
+            style: Theme.of(context)
+                .textTheme
+                .displayLarge
+                ?.copyWith(color: Colors.white)),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
       ),
@@ -57,17 +56,20 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple,
                     foregroundColor: Colors.white,
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   child: const Text('Generate Code'),
                 ),
               ),
               const Spacer(),
-              const Text(
+              Text(
                 'Choose one to start matching!',
                 textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                      color: Colors.grey,
+                    ),
               ),
               const Spacer(),
               const SizedBox(height: 16),
@@ -86,6 +88,9 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purpleAccent,
                     foregroundColor: Colors.white,
+                    textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                   child: const Text('Enter Code'),
                 ),
