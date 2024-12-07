@@ -85,7 +85,7 @@ class HttpHelper {
     if (response.statusCode == 200) {
       return json.decode(response.body)['data'];
     } else {
-      throw Exception('Failed to vote on movie');
+      throw Exception('Failed to vote on movie: ${response.statusCode} - ${response.body}');
     }
   }
 
