@@ -48,10 +48,12 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
           _isLoadingMore = true;
         });
 
+        //Get the next page of movies
         final response =
             await HttpHelper.getPopularMovies(page: _currentPage + 1);
         final newMovies = response['results'] as List<dynamic>;
 
+        //Add new movies to the existing list
         if (mounted) {
           setState(() {
             _movies.addAll(newMovies);
@@ -78,39 +80,46 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
     }
   }
 
-  void _handleSwipe(DismissDirection direction) {
+  void _handleSwipe(DismissDirection direction) async {
+    // Swipe right means the user liked the movie (bool is set to true)
     final bool liked = direction == DismissDirection.startToEnd;
-    _voteOnMovie(liked);
 
-    // Move to next random movie in the array
+    // Store the movie that the user just swiped
+    final currentMovieBeforeSwipe = _currentMovie;
+
+    // Update the screen to show the next movie card
     if (_currentIndex < _movies.length - 1) {
       setState(() {
         _currentIndex++;
         _currentMovie = _movies[_currentIndex];
       });
 
-      // Load more movies when there's 3 movies left in the array
+      // Load more movies when there are only 3 movies left in the array
       if (_currentIndex >= _movies.length - 3 && !_isLoadingMore) {
         _loadMovies(loadMore: true);
       }
     }
+
+    if (currentMovieBeforeSwipe != null) {
+      await _voteOnMovie(liked, currentMovieBeforeSwipe);
+    }
   }
 
-  Future<void> _voteOnMovie(bool liked) async {
+  Future<void> _voteOnMovie(bool liked, Map<String, dynamic> votedMovie) async {
     try {
       final sessionID = await HttpHelper.getSessionID();
       if (sessionID == null || sessionID.isEmpty) return;
 
-      final movieID = _currentMovie!['id'] as int;
+      final movieID = votedMovie['id'] as int;
       final result = await HttpHelper.voteMovie(
         sessionID: sessionID,
         movieID: movieID,
         vote: liked,
       );
 
-      // Only show dialog if there's a match and we're still mounted
+      // Only show the dialog if there's a match and we're still mounted
       if (result['match'] == true && mounted) {
-        final movieTitle = _currentMovie!['title'] as String;
+        final movieTitle = votedMovie['title'] as String;
         showDialog(
           context: context,
           barrierDismissible: false,
@@ -176,12 +185,11 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
         );
       }
     } catch (e) {
-      // Silently handle error to not disrupt user experience
-      debugPrint('Error voting on movie: $e');
+      throw Exception('Failed to vote on movie');
     }
   }
 
-  // Create the movie card
+  // Build the movie card
   Widget _buildMovieCard() {
     if (_currentMovie == null) {
       return const Center(
