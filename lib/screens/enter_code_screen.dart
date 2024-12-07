@@ -162,8 +162,8 @@ class _EnterCodeScreenState extends State<EnterCodeScreen> {
                 child: ElevatedButton(
                   onPressed: _isLoading ? null : _submitCode,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    foregroundColor: Theme.of(context).colorScheme.onPrimary,
+                    backgroundColor: Theme.of(context).colorScheme.secondary,
+                    foregroundColor: Theme.of(context).colorScheme.onSecondary,
                     disabledBackgroundColor: Colors.grey,
                     textStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           fontWeight: FontWeight.bold,

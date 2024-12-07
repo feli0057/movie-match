@@ -117,8 +117,8 @@ class _MovieMatchingScreenState extends State<MovieMatchingScreen> {
         vote: liked,
       );
 
-      // Only show the dialog if there's a match and we're still mounted
-      if (result['match'] == true && mounted) {
+      // Display a dialog if the user got a match
+      if (liked && result['match'] == true && mounted) {
         final movieTitle = votedMovie['title'] as String;
         showDialog(
           context: context,

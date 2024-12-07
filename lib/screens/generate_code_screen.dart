@@ -157,6 +157,7 @@ class _GenerateCodeScreenState extends State<GenerateCodeScreen> {
                     'Start Movie Match',
                     style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
+                          fontWeight: FontWeight.bold,
                         ),
                   ),
                 ),
